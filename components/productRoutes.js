@@ -52,7 +52,9 @@ router.get("/get/products/userId/:slug", async (req, res) => {
 router.get("/get/productsById/:slug", async (req, res) => {
   const { slug } = req.params;
   try {
+    console.log("/get/products slug - ", slug);
     const objectId = new ObjectId(slug);
+    console.log("/get/products objectId - ", objectId);
     const result = await PRODUCTS.findOne({ _id: objectId });
     console.log("/get/products result - ", result);
     res.status(200).json({ response: "true", result: result });

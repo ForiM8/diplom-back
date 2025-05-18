@@ -7,6 +7,8 @@ import authRoutes from "./components/authRoutes.js";
 import userRoutes from "./components/userRoutes.js";
 import productRoutes from "./components/productRoutes.js";
 import categoryRoutes from "./components/categoryRoutes.js";
+import orderRoutes from "./components/orderRoutes.js";
+import messengerRoutes from "./components/messengerRoutes.js";
 import { DB } from "./config/database/database.js";
 
 const APP = express();
@@ -65,6 +67,8 @@ APP.use(authRoutes);
 APP.use(userRoutes);
 APP.use(productRoutes);
 APP.use(categoryRoutes);
+APP.use(orderRoutes);
+APP.use(messengerRoutes);
 
 APP.listen(PORT, () => {
   console.log(`Server is running via https://localhost:${PORT}`);
