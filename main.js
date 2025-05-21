@@ -9,6 +9,8 @@ import productRoutes from "./components/productRoutes.js";
 import categoryRoutes from "./components/categoryRoutes.js";
 import orderRoutes from "./components/orderRoutes.js";
 import messengerRoutes from "./components/messengerRoutes.js";
+import basketRoutes from "./components/basketRoutes.js";
+import favoriteRoute from "./components/favoriteRoute.js";
 import { DB } from "./config/database/database.js";
 
 const APP = express();
@@ -16,7 +18,6 @@ const PORT = 3453;
 
 APP.use(cors({}), express.json());
 
-// Настройка сессий
 APP.use(
   session({
     secret: "3n0JogsPMZV/ms+1oEoUYIfscuiRQwChykQE8HUi1mo=",
@@ -25,11 +26,9 @@ APP.use(
   })
 );
 
-// Инициализация Passport и сессий
 APP.use(passport.initialize());
 APP.use(passport.session());
 
-// Настройка локальной стратегии
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -62,13 +61,14 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// Использование маршрутов
 APP.use(authRoutes);
 APP.use(userRoutes);
 APP.use(productRoutes);
 APP.use(categoryRoutes);
 APP.use(orderRoutes);
 APP.use(messengerRoutes);
+APP.use(basketRoutes);
+APP.use(favoriteRoute);
 
 APP.listen(PORT, () => {
   console.log(`Server is running via https://localhost:${PORT}`);
