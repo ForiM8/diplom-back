@@ -6,7 +6,6 @@ import { DB } from "./../config/database/database.js";
 const router = express.Router();
 const USERS = DB.collection("users");
 
-// Маршрут для входа
 router.post("/auth/login", async (req, res) => {
   try {
     const user = await USERS.findOne({
@@ -29,14 +28,12 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
-// Маршрут для выхода
 router.get("/auth/logout", (req, res) => {
   console.log("/auth/logout - ", req.body);
   req.logout();
   res.redirect("/");
 });
 
-// Маршрут для обновления токена
 router.post("/auth/refresh", async (req, res) => {
   const { refreshToken } = req.body;
 
@@ -59,13 +56,11 @@ router.post("/auth/refresh", async (req, res) => {
   }
 });
 
-// Функция для проверки валидности refresh токена
 async function verifyRefreshToken(refreshToken) {
   const user = await USERS.findOne({ refreshToken });
   return user;
 }
 
-// Функция для генерации access токена
 function generateAccessToken(user) {
   const accessToken = jwt.sign(
     { id: user._id, email: user.email },

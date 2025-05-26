@@ -64,4 +64,27 @@ router.get("/get/productsById/:slug", async (req, res) => {
   }
 });
 
+router.delete("/clear/productsById/:id", async (req, res) => {
+  const { id } = req.params;
+  const objectId = new ObjectId(id);
+  if (!id) {
+    return res
+      .status(400)
+      .json({ response: "false", error: "Параметр id отсутствует" });
+  }
+
+  try {
+    const result = await PRODUCTS.deleteOne({ _id: objectId });
+    console.log("Документ с _id:", id, "удален:", result);
+    res.status(200).json({
+      response: "true",
+      message: `Документ с _id ${id} успешно удален`,
+      result: result,
+    });
+  } catch (error) {
+    console.error("Ошибка при удалении документа:", error);
+    res.status(500).json({ response: "false", error: error.message });
+  }
+});
+
 export default router;
